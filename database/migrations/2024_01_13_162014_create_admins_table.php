@@ -1,6 +1,7 @@
 <?php
 
-use App\Models\Course;
+use App\Models\Admin;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -14,16 +15,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('admins', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('surname');
-            $table->string('email')->unique();
-            $table->foreignIdFor(Course::class);
+            $table->string('email');
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
         });
+
+        Admin::create([
+            'name' => 'Ashirbek',
+            'email' => 'ashirbek@gmail.com',
+            'password' => Hash::make('12345678'),
+        ]);
     }
 
     /**
@@ -33,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('admins');
     }
 };
